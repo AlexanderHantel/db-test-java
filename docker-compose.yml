@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U testuser"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+
+  app:
+    build: .
+    container_name: app-test
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/testdb"
+      SPRING_DATASOURCE_USERNAME: "testuser"
+      SPRING_DATASOURCE_PASSWORD: "testpass"
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: testuser
+      DB_NAME: testdb
+      PGPASSWORD: testpass
+    volumes:
+      - ./:/usr/src/app:cached
+    tty: true
+    command: mvn test
+
+volumes:
+  pgdata:
