@@ -36,11 +36,11 @@ jobs:
 
       - name: Build and run containers
         run: |
-          docker-compose -f docker-compose.yml down -v
-          docker-compose -f docker-compose.yml up --build --abort-on-container-exit
+          docker compose -f docker-compose.yml down -v
+          docker compose -f docker-compose.yml up --build --abort-on-container-exit
 
       - name: Show logs
-        run: docker-compose -f docker-compose.yml logs --no-color
+        run: docker compose -f docker-compose.yml logs --no-color
 
       - name: Tear down
-        run: docker-compose -f docker-compose.yml down -v
+        run: docker compose -f docker-compose.yml down -v
