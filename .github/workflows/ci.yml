@@ -38,6 +38,13 @@ jobs:
           docker compose -f docker-compose.yml down -v
           docker compose -f docker-compose.yml up --build --abort-on-container-exit
 
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: target/surefire-reports/
+
       - name: Show logs
         run: docker compose -f docker-compose.yml logs --no-color
 
