@@ -1,0 +1,46 @@
+name: DB Tests
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U testuser"
+          --health-interval 5s
+          --health-timeout 2s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Compose
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and run containers
+        run: |
+          docker-compose -f docker-compose.yml down -v
+          docker-compose -f docker-compose.yml up --build --abort-on-container-exit
+
+      - name: Show logs
+        run: docker-compose -f docker-compose.yml logs --no-color
+
+      - name: Tear down
+        run: docker-compose -f docker-compose.yml down -v
