@@ -49,8 +49,8 @@ To run the project and execute tests on your machine:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-org>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/AlexanderHantel/db-test-java.git
+cd db-test-java
 
 # 2. Start containers (Postgres + app)
 docker-compose up --build --abort-on-container-exit
