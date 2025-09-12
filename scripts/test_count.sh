@@ -16,10 +16,10 @@ done
 
 count=$(psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -d "$PGDATABASE" -t -c "SELECT COUNT(*) FROM employees;" | xargs)
 
-if [ "$count" -eq 4 ]; then
-  echo "OK: found 4 employees"
+if [ "$count" -eq 5 ]; then
+  echo "OK: found 5 employees"
   exit 0
 else
-  echo "FAIL: expected 4 employees, got $count"
+  echo "FAIL: expected 5 employees, got $count"
   exit 1
 fi
