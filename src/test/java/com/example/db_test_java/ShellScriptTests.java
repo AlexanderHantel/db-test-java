@@ -53,16 +53,20 @@ class ShellScriptTests {
 
         Process process = pb.start();
 
+        StringBuilder output = new StringBuilder();
+        
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                output.append(line).append(System.lineSeparator());
             }
         }
 
         int exitCode = process.waitFor();
         if (exitCode != 0) {
-            throw new RuntimeException("Script failed with exit code " + exitCode);
+            throw new AssertionError(
+                    "Script failed (exit code " + exitCode + ") Output:\n" + output.toString()
+                );
         }
     }
 
