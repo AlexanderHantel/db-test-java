@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.db_test_java.exception.ScriptAssertionError;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -64,8 +66,8 @@ class ShellScriptTests {
 
         int exitCode = process.waitFor();
         if (exitCode != 0) {
-            throw new AssertionError(
-                    "Script failed (exit code " + exitCode + ") Output:\n" + output.toString()
+            throw new ScriptAssertionError(
+                    "Script failed (exit code " + exitCode + ") Output:\n" + output.toString().trim()
                 );
         }
     }
