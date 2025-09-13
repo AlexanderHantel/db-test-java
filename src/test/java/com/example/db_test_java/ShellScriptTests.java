@@ -71,6 +71,11 @@ class ShellScriptTests {
                 );
         }
     }
+    
+    @Test
+    void testAb() throws Exception {
+        runScript("scripts/test.sh");
+    }
 
     @Test
     void testCountUsers() throws Exception {
