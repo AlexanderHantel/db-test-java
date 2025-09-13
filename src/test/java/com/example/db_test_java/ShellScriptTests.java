@@ -73,7 +73,7 @@ class ShellScriptTests {
     }
     
     @Test
-    void testAb() throws Exception {
+    void testAbsencedScript() throws Exception {
         runScript("scripts/test.sh");
     }
 
