@@ -6,6 +6,11 @@ The system validates data integrity and schema rules with both **JUnit tests** a
 
 The goal is to provide a simple, reproducible, and scalable way to verify database logic in CI/CD pipelines.
 
+> **Note**  
+> The following test failures and errors are **intentionally introduced** to demonstrate that the orchestrator works correctly in both positive and negative scenarios:  
+> - unit test `testCountUsers` — **FAIL**: expected 5 employees, got 4  
+> - unit test `testAbsencedScript` — exception `java.io.IOException: Cannot run program "scripts/test.sh"`
+
 ---
 
 ## Features
